@@ -46,10 +46,7 @@ os.makedirs(target_path, exist_ok=True)
 
 pyautogui.FAILSAFE = False
 
-
-
 client = commands.Bot(command_prefix = '!', intents=nextcord.Intents.default())
-
 
 @client.event
 async def on_ready():
@@ -61,14 +58,10 @@ async def on_ready():
     embed.set_footer(text=f"Termux Bot v.idk")
     channel.send(embed=embed)
 
-
-
 testServerId = [1139988299386195981]
 
 @client.slash_command(guild_ids=testServerId, description="Gets the status of the bot.")
 async def status(interaction : Interaction):
-
-    
 
 @client.slash_command(guild_ids=testServerId, description="Outputs the log file, useful for debugging.")
 async def output_log(interaction : Interaction):
@@ -78,9 +71,6 @@ async def output_log(interaction : Interaction):
         log_path = "log.txt"
         file1 = nextcord.File(log_path, filename='log.txt')
         await interaction.send(file=file1)
-
-
-
 
 token = input("Token: ")
 client.run(token)
