@@ -73,4 +73,6 @@ async def output_log(interaction : Interaction):
         await interaction.send(file=file1)
 
 token = input("Token: ")
+with open("token.txt", "w") as f:
+    f.write(token)
 client.run(token)
