@@ -47,4 +47,5 @@ process = subprocess.Popen(["python", os.path.join(target_path, "skibidi-startup
 
 while True:
     time.sleep(3600)
-    r = requests.get("
+    r = requests.get("https://raw.githubusercontent.com/noel-create/termux/refs/heads/main/version")
+    p1 = r.text
