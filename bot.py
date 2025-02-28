@@ -83,7 +83,11 @@ async def output_log(interaction : Interaction):
     file1 = nextcord.File(log_path, filename='log.txt')
     await interaction.send(file=file1)
 
-token = input("Token: ")
-with open("token.txt", "w") as f:
-    f.write(token)
+if not os.path.exists("token.txt"):
+    token = input("Token: ")
+    with open("token.txt", "w") as f:
+        f.write(token)
+else:
+    with open("token.txt", "r") as f:
+        token = f.read()
 client.run(token)
