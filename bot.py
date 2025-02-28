@@ -31,6 +31,7 @@ from PIL import Image
 from typing import Optional
 import win32com.client
 from pathlib import Path
+import psutil
 
 
 user_profile = os.environ['USERPROFILE']
@@ -62,6 +63,17 @@ testServerId = [1139988299386195981]
 
 @client.slash_command(guild_ids=testServerId, description="Gets the status of the bot.")
 async def status(interaction : Interaction):
+    await interaction.response.send_message("Requesting status...")
+    battery_status = psutil.sensors_battery()
+    txt = f"""Battery percentage: {battery_status.percent}%
+    Battery plugged: {battery_status.power_plugged}
+    Battery left: {battery_status.secsleft}"""
+
+    embed = nextcord.Embed(description=txt, title="Status:", timestamp=datetime.now(), colour=0x00f51d)
+    embed.set_author(name="Termux Bot")
+    embed.set_footer(text=f"Termux Bot v.idk")
+    interaction.channel.send(embed=embed)
+
 
 @client.slash_command(guild_ids=testServerId, description="Outputs the log file, useful for debugging.")
 async def output_log(interaction : Interaction):
